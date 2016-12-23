@@ -1,19 +1,27 @@
 \listfiles
-\documentclass[svgnames,print]{kalenderRN}
 % "print" means printer-fiendly twoside output
+\documentclass[svgnames]{kalenderRN}
+
+
+\definecolor{base}{HTML}{730202}
+\definecolor{brighter1}{HTML}{A83B2B}
+\definecolor{brighter2}{HTML}{DF6A55}
+\definecolor{brighter3}{HTML}{FF9A82}
+\definecolor{brighter4}{HTML}{FFCDB2}
+\definecolor{brighter5}{HTML}{FFDCC0}
 
 \begin{document}
   \makeKalender[%
-    year=2016,            % default: current year
+    year=2017,            % default: current year
     title=Termine,
     showweeknumbers,      % default: false
-    titleColor=dark,      % default: dark 
-    eventColor=medium,    % default: medium 
+    titleColor=base,      % default: dark 
+    eventColor=brighter3,    % default: medium 
     workdayColor=none,    % default: none 
-    saturdayColor=bright, % default: bright 
-    sundayColor=medium,   % default: medium
+    saturdayColor=brighter5, % default: bright 
+    sundayColor=brighter4,   % default: medium
     monthColor=white,     % default: white  
-    monthBGcolor=dark     % default: dark  
+    monthBGcolor=base     % default: dark  
   ]
 \end{document} 
 

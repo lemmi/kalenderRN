@@ -32,10 +32,10 @@
   \RequirePackage{fontspec}
   \setsansfont[Ligatures=TeX]{TeX Gyre Heros}
 \else
-  \RequirePackage[T1]{fontenc}
+%  \RequirePackage[T1]{fontenc}
   \RequirePackage{textcomp}
   \RequirePackage{lmodern}
-  \RequirePackage{tgheros}
+  %\RequirePackage{tgheros}
 \fi
 
 \renewcommand*\familydefault{\sfdefault}
@@ -73,11 +73,81 @@
 \deftranslation[to=ngerman]{Sat}{Sb}
 \deftranslation[to=ngerman]{Sun}{So}
 
+\RequirePackage{environ}
 \RequirePackage{tikz}
 \usetikzlibrary{calc}
 \usetikzlibrary{calendar}
 
 \RequirePackage{varwidth}
+
+\newdimen\fontdim
+\newdimen\upperfontdim
+\newdimen\lowerfontdim
+\newif\ifmoreiterations
+\fontdim 8pt
+
+\makeatletter
+\NewEnviron{fitbox}[2]{% \begin{fitbox}{<width>}{<height>} stuff \end{fitbox}
+	\def\buildbox{%
+		\setbox0\vbox{\hbox{\minipage{#1}%
+	  \fontsize{\fontdim}{\fontdim}%
+	  \selectfont%
+	  \stuff%
+	\endminipage}}%
+	\dimen@\ht0
+	\advance\dimen@\dp0
+  }
+  \def\stuff{\BODY}% Store environment body
+  \buildbox
+  % Compute upper and lower bounds
+  \ifdim\dimen@>#2
+	\loop
+	  \fontdim.5\fontdim % Reduce font size by half
+	  \buildbox
+	\ifdim\dimen@>#2 \repeat
+	\lowerfontdim\fontdim
+	\upperfontdim2\fontdim
+	\fontdim1.5\fontdim
+  \else
+	\loop
+	  \fontdim2\fontdim % Double font size
+	  \buildbox
+	\ifdim\dimen@<#2 \repeat
+	\upperfontdim\fontdim
+	\lowerfontdim.5\fontdim
+	\fontdim.75\fontdim
+  \fi
+  % Now try to find the optimum size
+  \loop
+  \message{Bounds: \the\lowerfontdim\space
+           \the\fontdim\space \the\upperfontdim^^J}
+	\buildbox
+	\ifdim\dimen@>#2
+	  \moreiterationstrue
+	  \upperfontdim\fontdim
+	  \advance\fontdim\lowerfontdim
+	  \fontdim.5\fontdim
+	\else
+	  \advance\dimen@-#2
+	  \ifdim\dimen@<10pt
+		\lowerfontdim\fontdim
+		\advance\fontdim\upperfontdim
+		\fontdim.5\fontdim
+		\dimen@\upperfontdim
+		\advance\dimen@-\lowerfontdim
+		\ifdim\dimen@<.2pt
+		  \moreiterationsfalse
+		\else
+		  \moreiterationstrue
+		\fi
+	  \else
+		\moreiterationsfalse
+	  \fi
+	\fi
+  \ifmoreiterations \repeat
+  \message{Selected font: \the\fontdim\space^^J}%
+  \box0% Typeset content
+}
 
 \newcommand*\RN@year{}
 \edef\RN@year{\the\numexpr\year}
@@ -159,10 +229,9 @@
   \pgfkeys{/CAL/event/.cd, #3}%
   \@ifundefined{event@#1}{%
     \protected@edef\@tempa{\noexpand\@ifundefined{pgf@sh@ns@cal-#1}{}{%
-      \noexpand\node[anchor=north west] at ($(cal-#1.north east)-(.6em,0em)$){%
-        \noexpand\makebox[0pt][r]{\noexpand\resizebox{!}{1.15ex}{%
-          \noexpand\varwidth{4.6cm}#2\noexpand\strut\noexpand\endvarwidth}}};}%
-    }%
+      \noexpand\node[anchor=north east] at ($(cal-#1.north east)-(.1em,0em)$){%
+		  \noexpand\begin{fitbox}{2.95cm}{0.33cm}\noexpand\raggedleft#2\noexpand\end{fitbox}};}%
+    }
     \@namedef{event@#1}{#2}%
     \pgfcalendarifdate{#1}{at most=06-last}% first half-year?
     {\expandafter\g@addto@macro\expandafter\RN@events@I\expandafter{\@tempa}}%
@@ -196,11 +265,11 @@
         day code={%
           \node[name=\pgfcalendarsuggestedname,every day,shape=rectangle,%
             minimum height=.53cm,text width=4.4cm,draw=black]{\tikzdaytext};%
-            \draw(-1.8cm,-.1ex) node[anchor=west]{\footnotesize
+            \draw(-1.85cm,-.1ex) node[anchor=west]{\footnotesize%
               \pgfcalendarweekdayshortname{\pgfcalendarcurrentweekday}%
               \ifRN@showweeknumbers
-                \ifdate{Monday}{~~\stepcounter{weeknumber}\normalsize[%
-                  \mbox{\footnotesize\arabic{weeknumber}}]}{}%
+                \ifdate{Monday}{~\stepcounter{weeknumber}\tiny[%
+                  \mbox{\tiny\arabic{weeknumber}}]}{}%
               \fi
             };%
         },%
