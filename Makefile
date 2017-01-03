@@ -1,5 +1,5 @@
 all:
-	pdflatex -output-directory=out Kalender2016.tex
+	pdflatex -output-directory=out Kalender.tex
 
 .PHONY: clean
 clean:
