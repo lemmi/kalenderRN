@@ -146,6 +146,10 @@
 	\fi
   \ifmoreiterations \repeat
   \message{Selected font: \the\fontdim\space^^J}%
+  \ifdim\fontdim>8pt
+  \fontdim 8pt
+  \fi
+  \buildbox
   \box0% Typeset content
 }
 
