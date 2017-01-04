@@ -135,7 +135,7 @@
 		\fontdim.5\fontdim
 		\dimen@\upperfontdim
 		\advance\dimen@-\lowerfontdim
-		\ifdim\dimen@<.2pt
+		\ifdim\dimen@<1pt
 		  \moreiterationsfalse
 		\else
 		  \moreiterationstrue
@@ -233,7 +233,7 @@
   \pgfkeys{/CAL/event/.cd, #3}%
   \@ifundefined{event@#1}{%
     \protected@edef\@tempa{\noexpand\@ifundefined{pgf@sh@ns@cal-#1}{}{%
-      \noexpand\node[anchor=north east] at ($(cal-#1.north east)-(.1em,0em)$){%
+      \noexpand\node[anchor=east] at ($(cal-#1.north east)-(.1em,.8em)$){%
 		  \noexpand\begin{fitbox}{2.95cm}{0.33cm}\noexpand\raggedleft#2\noexpand\end{fitbox}};}%
     }
     \@namedef{event@#1}{#2}%
