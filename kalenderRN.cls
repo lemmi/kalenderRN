@@ -90,7 +90,7 @@
 \NewEnviron{fitbox}[2]{% \begin{fitbox}{<width>}{<height>} stuff \end{fitbox}
 	\def\buildbox{%
 		\setbox0\vbox{\hbox{\minipage{#1}%
-	  \fontsize{\fontdim}{\fontdim}%
+	  \fontsize{\fontdim}{.9\fontdim}%
 	  \selectfont%
 	  \stuff%
 	\endminipage}}%
