@@ -135,7 +135,7 @@
 		\fontdim.5\fontdim
 		\dimen@\upperfontdim
 		\advance\dimen@-\lowerfontdim
-		\ifdim\dimen@<.1pt
+		\ifdim\dimen@<.02pt
 		  \moreiterationsfalse
 		\else
 		  \moreiterationstrue
@@ -234,7 +234,7 @@
   \@ifundefined{event@#1}{%
     \protected@edef\@tempa{\noexpand\@ifundefined{pgf@sh@ns@cal-#1}{}{%
       \noexpand\node[anchor=east] at ($(cal-#1.north east)-(.1em,.8em)$){%
-		  \noexpand\begin{fitbox}{2.95cm}{0.33cm}\noexpand\raggedleft#2\noexpand\end{fitbox}};}%
+		  \noexpand\begin{fitbox}{3.0cm}{0.35cm}\noexpand\raggedleft#2\noexpand\end{fitbox}};}%
     }
     \@namedef{event@#1}{#2}%
     \pgfcalendarifdate{#1}{at most=06-last}% first half-year?
