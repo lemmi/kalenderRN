@@ -135,7 +135,7 @@
 		\fontdim.5\fontdim
 		\dimen@\upperfontdim
 		\advance\dimen@-\lowerfontdim
-		\ifdim\dimen@<1pt
+		\ifdim\dimen@<.1pt
 		  \moreiterationsfalse
 		\else
 		  \moreiterationstrue
