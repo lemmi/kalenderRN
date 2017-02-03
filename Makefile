@@ -1,5 +1,5 @@
 all:
-	pdflatex -output-directory=out -interaction=batchmode Kalender.tex
+	pdflatex -output-directory=out -interaction=nonstopmode Kalender.tex
 
 .PHONY: clean
 clean:
