@@ -1,5 +1,5 @@
 all:
-	pdflatex -output-directory=out -interaction=nonstopmode Kalender.tex
+	lualatex -output-directory=out -interaction=nonstopmode Kalender.tex
 
 .PHONY: clean
 clean:

@@ -135,7 +135,7 @@
 		\fontdim.5\fontdim
 		\dimen@\upperfontdim
 		\advance\dimen@-\lowerfontdim
-		\ifdim\dimen@<.005pt
+		\ifdim\dimen@<.01pt
 		  \moreiterationsfalse
 		\else
 		  \moreiterationstrue
@@ -258,7 +258,7 @@
 \newcommand\RN@@title{%
   \raisebox{-.3\height}{\parbox[b]{\wd\RN@tempbox}{%
     \fontsize{60}{70}\selectfont\color{\RN@titleColor}%
-	\textbf{\RN@year}~\textbf{\Huge\RN@title}\hfill
+    \textbf{\RN@year}~\textbf{\Huge\RN@title}\hfill%
   }}%
 }
 
